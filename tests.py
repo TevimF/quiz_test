@@ -105,6 +105,30 @@ def test_find_test_by_id():
     id = choice.id
     assert question._find_choice_by_id(id) == choice
 
+@pytest.fixture
+def test_question():
+    question = Question(title='q1')
+    question.add_choice('a', False)
+    question.add_choice('b', False)
+    question.add_choice('c', True)
+    return question
+
+def test_create_test_question(test_question):
+    assert test_question is not None
+
+def test_test_question_length(test_question):
+    assert len(test_question.choices) == 3
+
+
+def correct_choice(test_question):
+    choice = test_question.choices[0]
+    assert choice.text == 'a'
+    assert not choice.is_correct
+
+    choice = test_question.choices[2]
+    assert choice.text == 'c'
+    assert choice.is_correct
+
 
 
 
